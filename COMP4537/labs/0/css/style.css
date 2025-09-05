@@ -21,6 +21,7 @@ main {
     font-size: 1.2rem;
     color: #111;
     cursor: pointer;
+    border: 2px solid transparent;
   }
 
   /* Row view while showing initial order */
