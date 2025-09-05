@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 9 Memory Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main>
+        <!-- Input section -->
+        <label id="numButtonsLabel" for="numButtonsInput"></label>
+        <input 
+            type="number" 
+            id="numButtonsInput" 
+            min="3" 
+            max="7" 
+            step="1">
+        <button id="goButton">Go</button>
+
+        <!-- Game area -->
+        <div id="buttonContainer"></div>
+
+        <!-- Message area -->
+        <p id="messageArea"></p>
+    </main>
+    <!-- Main game script -->
+    <script type="module" src="js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</body>
+</html>

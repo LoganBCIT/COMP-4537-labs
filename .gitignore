@@ -1,0 +1,8 @@
+# archives / binaries
+*.zip
+*.7z
+*.rar
+
+# OS junk
+.DS_Store
+Thumbs.db

@@ -1,0 +1,43 @@
+/* css/style.css */
+main {
+    max-width: 960px;
+    margin: 1rem auto;
+    font-family: system-ui, sans-serif;
+  }
+  
+  #buttonContainer {
+    /* Row display for initial layout */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 5em; /* keeps the area visible even before scrambling */
+  }
+  
+  #buttonContainer button {
+    width: 10em;
+    height: 5em;
+    border: none;
+    border-radius: 0.5em;
+    font-size: 1.2rem;
+    color: #111;
+    cursor: pointer;
+  }
+
+  /* Row view while showing initial order */
+#buttonContainer.row-mode {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* or use ROW_GAP_PX if you wire it from JS */
+  }
+  
+  /* Scramble view: container positions children absolutely */
+  #buttonContainer.scramble-mode {
+    position: relative;
+    width: 100vw;   /* JS will override actual px when scrambling */
+    height: 100vh;  /* JS will override actual px when scrambling */
+  }
+  #buttonContainer.scramble-mode > button {
+    position: absolute;
+  }
+  
+  
