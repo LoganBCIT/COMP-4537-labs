@@ -118,6 +118,10 @@ class GameController {
         // Set the label text from messages (no hard-coded strings)
         this.labelEl.textContent = this.messageHandler.get("LABEL_HOW_MANY");
       
+        // show limits hint inside the input
+        this.inputEl.placeholder = this.messageHandler.get("INPUT_PLACEHOLDER");
+
+
         // “Go” starts a new game
         this.goEl.addEventListener("click", () => {
           this.startNewGame();
@@ -477,7 +481,16 @@ class MessageHandler {
 
     setMessage(key) {
         // Show a user-facing message by key (keeps strings out of logic)
-        this.messageElement.textContent = this.messages[key];
+          const text = this.messages[key];
+        this.messageElement.textContent = text;
+
+        // success/error classes based on key
+        this.messageElement.classList.remove("message--success", "message--error");
+        if (key === "MSG_EXCELLENT") {
+          this.messageElement.classList.add("message--success");
+        } else if (key === "MSG_WRONG" || key === "MSG_INVALID_INPUT") {
+          this.messageElement.classList.add("message--error");
+        } 
       }
       
       get(key) {

@@ -5,6 +5,10 @@ main {
     font-family: system-ui, sans-serif;
   }
   
+body {
+  padding-top: 3rem;
+}
+  
   #buttonContainer {
     /* Row display for initial layout */
     display: flex;
@@ -40,5 +44,22 @@ main {
   #buttonContainer.scramble-mode > button {
     position: absolute;
   }
+
+  #messageArea {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  background: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+  min-height: 2.25rem;
+}
+
+.message--success { background: #e8f9f0; color: #0b7a45; border-bottom-color: #bfead6; }
+.message--error   { background: #fff1f0; color: #a4000f; border-bottom-color: #ffd0cc; }
+
   
   
