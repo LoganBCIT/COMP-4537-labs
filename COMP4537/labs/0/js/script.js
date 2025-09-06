@@ -397,28 +397,29 @@ class ButtonManager {
         this.container.classList.remove(CLASS_ROW);
         this.container.classList.add(CLASS_SCRAMBLE);
       
-        // set explicit px size based on the *current* window dimensions
-        this.container.style.width = String(windowWidth) + "px";
-        this.container.style.height = String(windowHeight) + "px";
-      
         // place each button at a random in-bounds position
         for (const button of this.buttons) {
-          // random x/y inside the viewport minus the button size
+          // random x inside the viewport minus the button size
           const maxX = Math.max(0, windowWidth - this.buttonWidthPx);
-          const maxY = Math.max(0, windowHeight - this.buttonHeightPx);
       
+          // use the container’s actual visible height 
+          const containerRect = this.container.getBoundingClientRect();
+          const usableHeight = Math.max(0, Math.round(containerRect.height));
+          const maxY = Math.max(0, usableHeight - this.buttonHeightPx);
+
           let x = Math.floor(Math.random() * (maxX + 1));
           let y = Math.floor(Math.random() * (maxY + 1));
-      
-          const clamped = this.clampToViewport(x, y, windowWidth, windowHeight);
-      
+
+          // pass usableHeight to the clamp
+          const clamped = this.clampToViewport(x, y, windowWidth, usableHeight);
+
           // absolute positioning is enabled by the .scramble-mode CSS rule
           button.button.style.left = String(clamped.x) + "px";
           button.button.style.top = String(clamped.y) + "px";
         }
       }
       
-      clampToViewport(x, y, windowWidth, windowHeight) {
+      clampToViewport(x, y, windowWidth, usableHeight) {
         let cx = x;
         let cy = y;
       
@@ -432,7 +433,7 @@ class ButtonManager {
       
         // right/bottom edges (ensure the whole button stays on screen)
         const maxX = windowWidth - this.buttonWidthPx;
-        const maxY = windowHeight - this.buttonHeightPx;
+        const maxY = usableHeight - this.buttonHeightPx;
       
         if (cx > maxX) {
           cx = maxX;
