@@ -1,6 +1,6 @@
 /* 
   Disclosure: Structural scaffolding and comments assisted by ChatGPT.  
-  All code has been reviewed and is understood by me (Logan Dutton-Anderson). 
+  All code has been prepared and is understood by me (Logan Dutton-Anderson). 
 */
 
 

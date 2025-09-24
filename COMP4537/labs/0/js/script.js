@@ -39,7 +39,7 @@ const BTN_ID_PREFIX = "btn-";
 // ============================
 // Layout constants
 // ============================
-const ROW_GAP_PX = 8;   // spacing when laying buttons in initial row
+const ROW_GAP_PX = 8;  
 
 // ============================
 // DOM element IDs (selectors)
@@ -115,7 +115,7 @@ class GameController {
         this.labelEl = document.getElementById(ID_LABEL);
         this.goEl    = document.getElementById(ID_GO);
       
-        // Set the label text from messages (no hard-coded strings)
+        // Set the label text from messages
         this.labelEl.textContent = this.messageHandler.get("LABEL_HOW_MANY");
       
         // show limits hint inside the input
@@ -333,7 +333,7 @@ class ButtonManager {
           this.buttons.push({ idNumber: i, button });  // remember element + original number
         }
       
-        // 3) Measure one button exactly once (for clamping during scramble)
+        // 3) Measure one button exactly once 
         if (this.buttons.length > 0) {
           const sample = this.buttons[0].button;
           const rect = sample.getBoundingClientRect(); // rendered size in CSS pixels
