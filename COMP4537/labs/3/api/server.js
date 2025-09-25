@@ -1,4 +1,3 @@
-// api/server.js
 const en = require("../lang/en.js");
 const { Utils } = require("../modules/utils.js");
 

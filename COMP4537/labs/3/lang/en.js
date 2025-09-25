@@ -1,4 +1,3 @@
-// lang/en.js
 module.exports = {
   qName: "name",
   msg: "Hello {name}, What a beautiful day. Server current date and time is ",

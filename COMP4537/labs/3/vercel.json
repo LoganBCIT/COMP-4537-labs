@@ -1,7 +1,7 @@
 {
   "rewrites": [
     { "source": "/COMP4537/labs/3/getDate", "destination": "/api/server" },
-    { "source": "/COMP4537/labs/3/writeFile", "destination": "/api/file/writeFile" },
-    { "source": "/COMP4537/labs/3/readFile/:file", "destination": "/api/file/readFile" }
+    { "source": "/COMP4537/labs/3/writeFile", "destination": "/api/file" },
+    { "source": "/COMP4537/labs/3/readFile/:file", "destination": "/api/file" }
   ]
 }
