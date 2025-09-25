@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/COMP4537/labs/3/getDate", "destination": "/api/server" }
+  ]
+}
