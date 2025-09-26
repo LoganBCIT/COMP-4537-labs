@@ -1,5 +1,5 @@
 const { getDate } = require("./modules/utils");
-const { MESSAGE, FILE_DNE, INTERNAL_ERROR } = require("./lang/en/en");
+const { MESSAGE, FILE_DNE, INTERNAL_ERROR } = require("./lang/en");
 const fs = require("fs");
 const http = require("http");
 
