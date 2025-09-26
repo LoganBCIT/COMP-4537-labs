@@ -12,7 +12,7 @@ const CT_HTML = en.contentTypeHtml;
 
 class FileApi {
   static getFilePath() {
-    return path.join(en.tmpDir || "/tmp", en.fileName || "file.txt");
+    return path.join(process.cwd(), en.fileName || "file.txt");
   }
 
   static sendHtml(res, status, body) {
