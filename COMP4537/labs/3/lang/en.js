@@ -8,5 +8,11 @@ module.exports = {
   blueOpen: "<p style=\"color: blue;\">",
   blueClose: "</p>",
   errMissing: "Missing required query parameter: name",
-  notFound: "Not Found"
+  notFound: "Not Found",
+  fileName: "file.txt",
+  tmpDir: "/tmp",
+  msgMissingText: "Missing ?text= query",
+  msgAppendOkPrefix: "Appended to",
+  msgReadNotFoundPrefix: "File not found:",
+  contentTypeHtml: "text/html; charset=utf-8"
 };
