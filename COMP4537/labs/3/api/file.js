@@ -1,60 +1,77 @@
-// api/file.js
 const fs = require("fs");
 const path = require("path");
+const en = require("../lang/en.js");
 
-const FILE_NAME = "file.txt";
-const FILE_PATH = path.join(process.cwd(), FILE_NAME);
+class FileApi {
+  static getFilePath() {
+    // Write to /tmp to avoid EROFS on Vercel
+    return path.join(en.tmpDir, en.fileName);
+  }
 
-function sendHtml(res, status, body) {
-  res.statusCode = status;
-  res.setHeader("Content-Type", "text/html; charset=utf-8");
-  res.end("<pre>" + body + "</pre>");
-}
+  static sendHtml(res, status, body) {
+    res.statusCode = status;
+    res.setHeader(en.hContentType || "Content-Type", en.hHtmlUtf8 || en.contentTypeHtml);
+    // simple <pre> so it shows in browser, not a download
+    res.end("<pre>" + body + "</pre>");
+  }
 
-module.exports = async (req, res) => {
-  const url = req.url || "";
-  const qIndex = url.indexOf("?");
-  const search = qIndex >= 0 ? url.slice(qIndex) : "";
-  const params = new URLSearchParams(search);
+  static handleWrite(req, res) {
+    // ?text=...
+    const qIdx = req.url.indexOf("?");
+    const search = qIdx >= 0 ? req.url.slice(qIdx) : "";
+    const params = new URLSearchParams(search);
+    const text = (params.get("text") || "").trim();
 
-  // /COMP4537/labs/3/writeFile?text=BCIT
-  if (url.includes("/writeFile")) {
-    const raw = params.get("text") || "";
-    const text = raw.trim();
     if (text.length === 0) {
-      sendHtml(res, 400, "Missing ?text= query");
+      FileApi.sendHtml(res, 400, en.msgMissingText);
       return;
     }
- 
-    fs.appendFile(FILE_PATH, text + "\n", (err) => {
+
+    const filePath = FileApi.getFilePath();
+    fs.appendFile(filePath, text + "\n", (err) => {
       if (err) {
-        sendHtml(res, 500, "Error writing file: " + err.message);
+        FileApi.sendHtml(res, 500, "Error writing file: " + err.message);
         return;
       }
-      sendHtml(res, 200, `Appended "${text}" to ${FILE_NAME}`);
+      FileApi.sendHtml(res, 200, `${en.msgAppendOkPrefix} ${en.fileName}`);
     });
-    return;
   }
 
-  // /COMP4537/labs/3/readFile/file.txt
-  if (url.includes("/readFile")) {
-    // try to capture the file name from the URL (after /readFile/)
-    const match = url.match(/\/readFile\/([^?/#]+)/);
-    const requested = match && match[1] ? match[1] : FILE_NAME;
-
-    fs.readFile(FILE_PATH, "utf8", (err, data) => {
+  static handleRead(req, res) {
+    const filePath = FileApi.getFilePath();
+    fs.readFile(filePath, "utf8", (err, data) => {
       if (err) {
         if (err.code === "ENOENT") {
-          sendHtml(res, 404, `File not found: ${requested}`);
-        } else {
-          sendHtml(res, 500, "Error reading file: " + err.message);
+          FileApi.sendHtml(res, 404, `${en.msgReadNotFoundPrefix} ${en.fileName}`);
+          return;
         }
+        FileApi.sendHtml(res, 500, "Error reading file: " + err.message);
         return;
       }
-      sendHtml(res, 200, data);
+      FileApi.sendHtml(res, 200, data);
     });
-    return;
   }
 
-  sendHtml(res, 404, "Not Found");
-};
+  static handler(req, res) {
+    // We only care about GETs for this lab
+    if (req.method !== "GET") {
+      FileApi.sendHtml(res, 405, "Method Not Allowed");
+      return;
+    }
+
+    // Vercel invokes this as /api/file/(rest)
+    // Your rewrites will map the class URLs to these
+    if (req.url.startsWith("/api/file/writeFile")) {
+      FileApi.handleWrite(req, res);
+      return;
+    }
+    if (req.url.startsWith("/api/file/readFile")) {
+      FileApi.handleRead(req, res);
+      return;
+    }
+
+    FileApi.sendHtml(res, 404, "Not Found");
+  }
+}
+
+module.exports = (req, res) => FileApi.handler(req, res);
