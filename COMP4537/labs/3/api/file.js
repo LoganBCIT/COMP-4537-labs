@@ -75,3 +75,4 @@ class FileApi {
 }
 
 module.exports = (req, res) => FileApi.handler(req, res);
+
